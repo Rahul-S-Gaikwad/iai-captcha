@@ -9,8 +9,12 @@ import text.config as config
 DEBUG = False       # if True script will output predictions compared to solutions
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"  # suppress tensorflow error messages
 
-MODEL_DATE = "20250421_002546"
-MODEL_PATH = os.path.join(config.MODELS_DIR, f"model_{MODEL_DATE}.keras")
+def get_latest_model_path():
+    return sorted(glob.glob(os.path.join(config.MODELS_DIR, "model_*.keras")))[-1]
+
+
+MODEL_PATH = get_latest_model_path()
+# MODEL_PATH = os.path.join(config.MODELS_DIR, f"model_20250421_002546.keras")
 
 def test():
     print(f"\nMarketplace: TRZ; Network: {MODEL_PATH}\n")

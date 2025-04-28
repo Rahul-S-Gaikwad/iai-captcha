@@ -13,8 +13,12 @@ import keras
 import object.testing.image_extractor as image_extractor
 import object.config as config
 
-MODEL_DATE = "20250324_180838"
-MODEL_PATH = os.path.join(config.MODELS_DIR, f"model_{MODEL_DATE}.keras")
+def get_latest_model_path():
+    return sorted(glob.glob(os.path.join(config.MODELS_DIR, "model_*.keras")))[-1]
+
+
+MODEL_PATH = get_latest_model_path()
+# MODEL_PATH = os.path.join(config.MODELS_DIR, f"model_20250324_180838.keras")
 
 class Solver:
     def __init__(self, network_path=MODEL_PATH, encoding_path=config.MODEL_LABELS_FILENAME):

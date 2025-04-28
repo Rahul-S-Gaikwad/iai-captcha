@@ -6,13 +6,18 @@ import numpy as np
 import sys
 import json
 import keras
+import glob
 
 import text.preprocessing.image_splitter as image_splitter
 import text.training.prepare_training as prepare_training
 import text.config as config
 
-MODEL_DATE = "20250421_002546"
-MODEL_PATH = os.path.join(config.MODELS_DIR, f"model_{MODEL_DATE}.keras")
+def get_latest_model_path():
+    return sorted(glob.glob(os.path.join(config.MODELS_DIR, "model_*.keras")))[-1]
+
+
+MODEL_PATH = get_latest_model_path()
+# MODEL_PATH = os.path.join(config.MODELS_DIR, f"model_20250421_002546.keras")
 
 class Solver:
     def __init__(self, network_path=MODEL_PATH, encoding_path=config.MODEL_LABELS_FILENAME):
