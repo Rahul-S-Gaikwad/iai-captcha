@@ -13,12 +13,22 @@ def get_model(n_classes):
     model.add(layers.Conv2D(16, kernel_size=(5, 5), activation='relu'))
     model.add(layers.MaxPool2D(pool_size=(2, 2), strides=(1, 1)))
 
+    model.add(layers.Conv2D(32, kernel_size=(5, 5), activation='relu'))
+    model.add(layers.MaxPool2D(pool_size=(2, 2), strides=(1, 1)))
+
+    model.add(layers.Conv2D(64, kernel_size=(5, 5), activation='relu'))
+    model.add(layers.MaxPool2D(pool_size=(2, 2), strides=(1, 1)))
+
 
     # flatten output of conv
     model.add(layers.Flatten())
 
     # hidden layer
     model.add(layers.Dense(512, activation='relu'))
+    model.add(layers.Dense(512, activation='relu'))
+
+    # dropout
+    model.add(layers.Dropout(0.2))
 
     # output layer
     model.add(layers.Dense(n_classes, activation='softmax'))

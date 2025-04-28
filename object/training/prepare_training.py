@@ -36,8 +36,8 @@ def training_val_data():
     Y_train = np.asarray(Y_train)
 
     # Loading the validation dataset
-    X_test = []
-    Y_test = []
+    X_val = []
+    Y_val = []
     # Iterate over validation images
     for image_file in paths.list_images(config.VAL_DIR):
         # Load image
@@ -48,23 +48,23 @@ def training_val_data():
         label = image_file.split(os.path.sep)[-2]
 
         # Add image and label to training data
-        X_test.append(image)
-        Y_test.append(label)
+        X_val.append(image)
+        Y_val.append(label)
 
-    X_test = [np.array(img, dtype=np.float32)/255 for img in X_test]
-    X_test = np.asarray(X_test)
-    Y_test = np.asarray(Y_test)
+    X_val = [np.array(img, dtype=np.float32)/255 for img in X_val]
+    X_val = np.asarray(X_val)
+    Y_val = np.asarray(Y_val)
 
     # Convert the labels (letters) into one-hot encodings that Keras can work with
     lb = LabelBinarizer().fit(Y_train)
     Y_train = lb.transform(Y_train)
-    Y_test = lb.transform(Y_test)
+    Y_val = lb.transform(Y_val)
 
     # Save the mapping from labels to one-hot encodings.
     with open(config.MODEL_LABELS_FILENAME, "wb") as f:
         pickle.dump(lb, f)
 
-    return X_train, X_test, Y_train, Y_test
+    return X_train, X_val, Y_train, Y_val
 
 
 
