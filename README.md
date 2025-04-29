@@ -26,6 +26,8 @@ merged/
 │   ├── prepare_training.py   # Training data preparation
 │   └── network.py            # Neural network architecture
 └── testing/                  # Testing and evaluation modules
+    ├── object/               # Object detection testing
+    └── text/                 # Text recognition testing
 ```
 
 ## Configuration
