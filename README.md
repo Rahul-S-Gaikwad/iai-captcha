@@ -1,32 +1,65 @@
-# CAPTCHA breaking in Darknet Marketplaces
+# CAPTCHA-breaking in Darknet Marketplaces
 
-## Usage
-### 1. Object-based CAPTCHA-breaker can be found in `object/`
+## Project Description
+This repository contains the implementation for the final project in the Introduction to Artificial Intelligence course (95-891) at Carnegie 
+Mellon University. This project is focused on developing and training models for CAPTCHA recognition, with components for text and 
+object detection. The system includes preprocessing, training, and testing pipelines for both text-based and object-based CAPTCHAs.
 
-#### Preprocessing
-- `create_training_data.py`: 
-  - Converts images into RGBA
-  - Permutes data
-  - Splits into training & validation
-  - Rotates data
+## File Structure
+```
+merged/
+├── config.py                 # Global configuration parameters
+├── data/                     # Data directories
+│   ├── raw_training_data/    # Raw training data
+│   ├── training_data/        # Processed training data
+│   ├── validation_data/      # Validation data
+│   ├── test_data/            # Test data
+│   └── scraped_captchas/     # Scraped CAPTCHA samples
+├── models/                   # Trained models
+│   ├── object/               # Object detection models
+│   └── text/                 # Text recognition models
+├── preprocessing/            # Preprocessing modules
+│   ├── object/               # Object detection preprocessing
+│   └── text/                 # Text recognition preprocessing
+├── training/                 # Training modules
+│   ├── trainer.py            # Main training script
+│   ├── prepare_training.py   # Training data preparation
+│   └── network.py            # Neural network architecture
+└── testing/                  # Testing and evaluation modules
+```
 
-    **&rarr; `data/training_data/` & `data/validation_data/`**
+## Configuration
+The project uses a centralized configuration file (`config.py`) that sets global parameters:
+- EPOCHS: Number of training epochs
+- BATCH_SIZE: Training batch size
+- SPLIT_RATE: Train/validation split ratio
+- Various directory paths for data and models
 
-#### Training
-- `trainer.py`: 
-  - Uses `prepare_training.py` to get training/validation images & labels
-  - Create one-hot encoding
-  - Uses `network.py` to get CNN
-  - Training with early stopping & saving best model
+## Usage Instructions
 
-    **&rarr; Saved models in `models/`**
+### Prerequisites
+- Python 3.9
+- Required Python packages listed in `requirements.txt`
 
-#### Testing
-- `tester.py`: 
-  - **User needs to provide timestamp of model to use**
-  - Uses HTML pages in `data/test_data/`
-  - Uses `solver.py` to load model & receive prediction
-  - Compare prediction & true label
-  - Compute accuracy
+### Data Preparation
+1. Place raw CAPTCHA data in the `data/raw_training_data` directory
+2. Run preprocessing scripts to prepare the data: 
+   ```bash
+   python preprocessing/object/create_training_data.py  # For object CAPTCHAs
+   python preprocessing/text/create_training_data.py  # For text CAPTCHAs
+   ```
 
-    **&rarr; Test accuracy**
+### Training
+1. Train the models:
+   ```bash
+   python training/trainer.py
+   ```
+2. Models are saved in the `models` directory
+
+### Testing
+1. Place test data in the `data/test_data` directory
+2. Run the testing scripts:
+   ```bash
+   python testing/object/tester.py  # For object CAPTCHAs
+   python testing/text/tester.py  # For text CAPTCHAs
+   ```
